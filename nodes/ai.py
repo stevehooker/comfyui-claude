@@ -8,13 +8,9 @@ import anthropic
 from PIL import Image
 
 models = [
-    'claude-3-5-haiku-latest',
-    'claude-3-5-sonnet-latest',
-    'claude-3-opus-latest',
-    'claude-3-haiku-20240307',
+    'claude-opus-4-1-20250805',
+    'claude-sonnet-4-20250514',
     'claude-3-5-haiku-20241022',
-    'claude-3-5-sonnet-20241022',
-    'claude-3-opus-20240229',
 ]
 
 
@@ -36,7 +32,7 @@ def run_prompt(
         client = anthropic.Anthropic(api_key=api_key)
         message = client.messages.create(
             model=model,
-            max_tokens=1024,
+            max_tokens=4096,
             system=system_prompt,
             messages=[
                 {'role': 'user', 'content': prompt},
@@ -82,7 +78,7 @@ def describe_image(
         client = anthropic.Anthropic(api_key=api_key)
         message = client.messages.create(
             model=model,
-            max_tokens=1024,
+            max_tokens=4096,
             system=system_prompt,
             messages=[
                 {
