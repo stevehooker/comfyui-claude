@@ -1,0 +1,248 @@
+{
+  "last_node_id": 10,
+  "last_link_id": 12,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [50, 100],
+      "size": [315, 314],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [1], "slot_index": 0},
+        {"name": "MASK", "type": "MASK", "links": null}
+      ],
+      "properties": {"Node name for S&R": "LoadImage"},
+      "widgets_values": ["dragon_foot_forest.png", "image"]
+    },
+    {
+      "id": 2,
+      "type": "Claude Context Aware Describe",
+      "pos": [400, 100],
+      "size": [400, 400],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {"name": "images", "type": "IMAGE", "link": 1}
+      ],
+      "outputs": [
+        {"name": "description", "type": "STRING", "links": [2], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "Claude Context Aware Describe"},
+      "widgets_values": [
+        "individual",
+        "",
+        "A dragon's foot appears to be floating above the ground rather than properly resting on it. The foot doesn't create proper ground contact or deformation.",
+        "ground contact points, weight distribution, shadow placement, terrain deformation, integration with environment",
+        "Analyze ONLY the problems with how this dragon foot meets the ground. Focus on what needs to be fixed, not what looks good.",
+        "claude-3-5-sonnet-latest",
+        "YOUR_API_KEY_HERE"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "Claude Prompt Engineer",
+      "pos": [850, 100],
+      "size": [450, 500],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {"name": "context", "type": "STRING", "link": 2}
+      ],
+      "outputs": [
+        {"name": "engineered_prompt", "type": "STRING", "links": [3], "slot_index": 0},
+        {"name": "system_prompt_out", "type": "STRING", "links": null}
+      ],
+      "properties": {"Node name for S&R": "Claude Prompt Engineer"},
+      "widgets_values": [
+        "Convert the analysis into specific Qwen edit commands",
+        "",
+        "Output ONLY action commands starting with verbs like: Anchor, Create, Add, Deepen, Cast, Compress. No descriptions or explanations. Each instruction on a new line.",
+        "structured_analysis",
+        "plain",
+        "concise",
+        "Example Input: The foot appears to float above the ground\nExample Output: Anchor the claw firmly onto rocky surface",
+        "Create ground depression under each talon",
+        0.2,
+        "claude-3-5-sonnet-latest",
+        "YOUR_API_KEY_HERE"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "Claude Iterative Refine",
+      "pos": [1350, 100],
+      "size": [400, 450],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {"name": "initial_result", "type": "STRING", "link": 3}
+      ],
+      "outputs": [
+        {"name": "refined_result", "type": "STRING", "links": [4], "slot_index": 0},
+        {"name": "improvement_notes", "type": "STRING", "links": null}
+      ],
+      "properties": {"Node name for S&R": "Claude Iterative Refine"},
+      "widgets_values": [
+        "",
+        "focus",
+        "Remove ALL descriptive text. Keep ONLY imperative commands for image editing. Combine related actions. Format as a single paragraph of connected instructions.",
+        2,
+        false,
+        true,
+        "brevity, actionability, technical precision",
+        "claude-3-5-sonnet-latest",
+        "YOUR_API_KEY_HERE"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "Claude Prompt Chain",
+      "pos": [1800, 100],
+      "size": [450, 550],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {"name": "input_text", "type": "STRING", "link": 4},
+        {"name": "input_image", "type": "IMAGE", "link": null}
+      ],
+      "outputs": [
+        {"name": "final_output", "type": "STRING", "links": [5], "slot_index": 0},
+        {"name": "intermediate_results", "type": "STRING", "links": null}
+      ],
+      "properties": {"Node name for S&R": "Claude Prompt Chain"},
+      "widgets_values": [
+        "",
+        null,
+        "Extract ONLY ground contact and deformation commands from: ",
+        false,
+        "Extract ONLY shadow and lighting adjustment commands from the original text",
+        false,
+        "Combine all commands into one flowing instruction suitable for Qwen, maximum 50 words",
+        true,
+        "synthesize",
+        "claude-3-5-sonnet-latest",
+        "YOUR_API_KEY_HERE"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "ShowText",
+      "pos": [2300, 100],
+      "size": [400, 200],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {"name": "text", "type": "STRING", "link": 5}
+      ],
+      "outputs": [],
+      "properties": {"Node name for S&R": "ShowText"},
+      "widgets_values": ["", "Final Qwen Edit Prompt"]
+    },
+    {
+      "id": 7,
+      "type": "Note",
+      "pos": [50, 500],
+      "size": [700, 300],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "properties": {"text": "QWEN EDIT PROMPT GUIDE:\n\n✅ GOOD (Action-oriented):\n- 'Anchor the dragon claw onto rocky ground'\n- 'Create ground deformation under weight'\n- 'Cast shadows from golden hour light'\n- 'Compress terrain at contact points'\n\n❌ BAD (Descriptive):\n- 'The foot should look grounded'\n- 'There needs to be shadows'\n- 'The lighting appears to be...'\n- 'The ground would naturally...'\n\n🎯 KEY PRINCIPLES:\n1. Start with ACTION VERBS\n2. Be SPECIFIC about what to change\n3. Keep it CONCISE (under 75 words ideal)\n4. Focus on VISUAL CHANGES not explanations\n5. Separate concerns (ground, shadows, integration)"},
+      "widgets_values": ["QWEN EDIT PROMPT GUIDE:\n\n✅ GOOD (Action-oriented):\n- 'Anchor the dragon claw onto rocky ground'\n- 'Create ground deformation under weight'\n- 'Cast shadows from golden hour light'\n- 'Compress terrain at contact points'\n\n❌ BAD (Descriptive):\n- 'The foot should look grounded'\n- 'There needs to be shadows'\n- 'The lighting appears to be...'\n- 'The ground would naturally...'\n\n🎯 KEY PRINCIPLES:\n1. Start with ACTION VERBS\n2. Be SPECIFIC about what to change\n3. Keep it CONCISE (under 75 words ideal)\n4. Focus on VISUAL CHANGES not explanations\n5. Separate concerns (ground, shadows, integration)"]
+    },
+    {
+      "id": 8,
+      "type": "Text Multiline",
+      "pos": [850, 650],
+      "size": [400, 150],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "outputs": [
+        {"name": "STRING", "type": "STRING", "links": [6], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "Text Multiline"},
+      "widgets_values": ["You are a Qwen edit instruction generator. Convert ANY input into ONLY action commands. Never describe, only command. Use verbs: Anchor, Create, Add, Deepen, Cast, Compress, Blend, Adjust. Maximum 15 words per instruction."]
+    },
+    {
+      "id": 9,
+      "type": "TransformText",
+      "pos": [1350, 650],
+      "size": [400, 250],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {"name": "text", "type": "STRING", "link": 4},
+        {"name": "system_prompt", "type": "STRING", "link": 6}
+      ],
+      "outputs": [
+        {"name": "transformed_text", "type": "STRING", "links": [7], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "TransformText"},
+      "widgets_values": [
+        "",
+        "claude-3-5-sonnet-latest",
+        "YOUR_API_KEY_HERE",
+        "",
+        "Rewrite as Qwen edit commands only"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "ShowText",
+      "pos": [1800, 650],
+      "size": [400, 200],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {"name": "text", "type": "STRING", "link": 7}
+      ],
+      "outputs": [],
+      "properties": {"Node name for S&R": "ShowText"},
+      "widgets_values": ["", "Alternative Qwen Output"]
+    }
+  ],
+  "links": [
+    [1, 1, 0, 2, 0, "IMAGE"],
+    [2, 2, 0, 3, 0, "STRING"],
+    [3, 3, 0, 4, 0, "STRING"],
+    [4, 4, 0, 5, 0, "STRING"],
+    [5, 5, 0, 6, 0, "STRING"],
+    [6, 8, 0, 9, 1, "STRING"],
+    [7, 9, 0, 10, 0, "STRING"]
+  ],
+  "groups": [
+    {
+      "title": "Analysis Phase",
+      "bounding": [380, 20, 450, 500],
+      "color": "#3f789e"
+    },
+    {
+      "title": "Conversion Phase", 
+      "bounding": [830, 20, 500, 600],
+      "color": "#b58b2a"
+    },
+    {
+      "title": "Refinement Phase",
+      "bounding": [1330, 20, 450, 600],
+      "color": "#8b4a8c"
+    },
+    {
+      "title": "Final Output",
+      "bounding": [1780, 20, 950, 850],
+      "color": "#4a8b5c"
+    }
+  ],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
