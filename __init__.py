@@ -1,43 +1,15 @@
 from .nodes.nodes import CombineTexts, DescribeImage, TransformText
-from .nodes.advanced_nodes import (
-    PromptEngineer,
-    ContextAwareDescribe,
-    IterativeRefine,
-    PromptChain
-)
-from .nodes.qwen_nodes import (
-    QwenPromptGenerator,
-    QwenFromImage
-)
 
 NODE_CLASS_MAPPINGS = {
-    # Original nodes
     'Describe Image': DescribeImage,
     'Combine Texts': CombineTexts,
     'Transform Text': TransformText,
-    # Advanced nodes
-    'Claude Prompt Engineer': PromptEngineer,
-    'Claude Context Aware Describe': ContextAwareDescribe,
-    'Claude Iterative Refine': IterativeRefine,
-    'Claude Prompt Chain': PromptChain,
-    # Qwen-specific nodes
-    'Qwen Prompt Generator': QwenPromptGenerator,
-    'Qwen From Image': QwenFromImage,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    # Original nodes
     'Describe Image': 'Describe Image',
-    'Combine Texts': 'Combine Texts',
+    'Combine Texts': 'Combine Texts', 
     'Transform Text': 'Transform Text',
-    # Advanced nodes with clear display names
-    'Claude Prompt Engineer': 'Prompt Engineer (Claude)',
-    'Claude Context Aware Describe': 'Context-Aware Describe (Claude)',
-    'Claude Iterative Refine': 'Iterative Refine (Claude)',
-    'Claude Prompt Chain': 'Prompt Chain (Claude)',
-    # Qwen nodes
-    'Qwen Prompt Generator': 'Qwen Prompt Generator',
-    'Qwen From Image': 'Qwen From Image',
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

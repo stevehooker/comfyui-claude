@@ -11,8 +11,7 @@ from comfyui_types import (
 from .ai import describe_image, models, run_prompt
 
 DESCRIBE_IMAGE_PROMPT = 'Describe this image in detail.'
-COMBINE_TEXTS_PROMPT = 'Combine the following two texts into one coherent \
-prompt without redundancies.'
+COMBINE_TEXTS_PROMPT = 'Combine the following two texts into one coherent prompt without redundancies.'
 
 
 class DescribeImage(ComfyUINode):
@@ -23,7 +22,6 @@ class DescribeImage(ComfyUINode):
     image = ImageInput()
     model = ChoiceInput(choices=models)
     api_key = StringInput()
-
     system_prompt = StringInput(required=False, multiline=True)
     prompt = StringInput(
         required=False, multiline=True, default=DESCRIBE_IMAGE_PROMPT
@@ -65,10 +63,9 @@ class CombineTexts(ComfyUINode):
     text_2_prefix = StringInput(default='2')
     model = ChoiceInput(choices=models)
     api_key = StringInput()
-
     system_prompt = StringInput(required=False, multiline=True)
     prompt = StringInput(
-        required=False, multiline=True, default=DESCRIBE_IMAGE_PROMPT
+        required=False, multiline=True, default=COMBINE_TEXTS_PROMPT
     )
 
     combined_texts = StringOutput()
@@ -113,10 +110,9 @@ class TransformText(ComfyUINode):
     text = StringInput(multiline=True)
     model = ChoiceInput(choices=models)
     api_key = StringInput()
-
     system_prompt = StringInput(required=False, multiline=True)
     prompt = StringInput(
-        required=False, multiline=True, default=DESCRIBE_IMAGE_PROMPT
+        required=False, multiline=True, default='Transform this text:'
     )
 
     transformed_text = StringOutput()
