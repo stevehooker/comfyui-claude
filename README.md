@@ -21,9 +21,18 @@ this [here](https://docs.anthropic.com/en/api/getting-started).
 
 ## Included nodes
 
-1. DescribeImage: Takes an image as input and returns a textual description of
-   it.
-2. CombineTexts: Combine two texts into something new with the help of Claude.
-3. TransformText: Transforms an input text into some other text, ideal for
-   rephrasing prompts or similar.
+1. **DescribeImage**: Takes an image as input and returns a textual description of it.
+2. **DescribeImage (Cached)**: Optimised version for batch image captioning that uses prompt caching to reduce costs by up to 90% when processing multiple images with the same system prompt. Ideal for generating captions for LoRA training datasets.
+3. **CombineTexts**: Combine two texts into something new with the help of Claude.
+4. **TransformText**: Transforms an input text into some other text, ideal for rephrasing prompts or similar.
+
+## Prompt Caching
+
+The **DescribeImage (Cached)** node implements [Anthropic's prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) feature, which caches your system prompt across multiple API calls. This is particularly useful when:
+
+- Processing batches of images with consistent captioning instructions
+- Generating training data for LoRA models
+- Running repetitive image analysis tasks
+
+**Cost savings**: After the first image, cached system prompts cost only 10% of regular input tokens, resulting in significant savings for batch operations.
 
