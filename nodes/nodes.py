@@ -8,7 +8,7 @@ from comfyui_types import (
     StringOutput,
 )
 
-from .ai import describe_image, models, run_prompt
+from .ai import describe_image, describe_image_cached, models, run_prompt
 
 DESCRIBE_IMAGE_PROMPT = 'Describe this image in detail.'
 COMBINE_TEXTS_PROMPT = 'Combine the following two texts into one coherent prompt without redundancies.'
@@ -50,6 +50,56 @@ class DescribeImage(ComfyUINode):
             str: The result of the prompt.
         """
         return (describe_image(image, prompt, system_prompt, model, api_key),)
+
+
+class DescribeImageCached(ComfyUINode):
+    """Describe an image with prompt caching for batch processing.
+    
+    Uses Claude's prompt caching to save costs when processing multiple images
+    with the same system prompt. The system prompt is cached and reused across
+    API calls, reducing token costs by 90% for cached content.
+    
+    Ideal for batch image captioning for LoRA training where you use the same
+    captioning instructions across many images.
+    """
+
+    category = 'Claude'
+    
+    image = ImageInput()
+    model = ChoiceInput(choices=models)
+    api_key = StringInput()
+    system_prompt = StringInput(
+        required=False, 
+        multiline=True,
+        default="You are an expert at describing images for AI training. Provide detailed, accurate captions."
+    )
+    prompt = StringInput(
+        required=False, multiline=True, default=DESCRIBE_IMAGE_PROMPT
+    )
+
+    description = StringOutput()
+
+    def execute(
+        self,
+        image: 'torch.Tensor',  # type: ignore[name-defined]  # noqa: F821
+        model: str,
+        api_key: str,
+        system_prompt: str,
+        prompt: str,
+    ) -> tuple[str, ...]:
+        """Send an image to Claude's vision API with prompt caching.
+
+        Args:
+            image (torch.Tensor): The image to describe.
+            model (str): The model to use.
+            api_key (str): The API key to use.
+            system_prompt (str): The system prompt to use (will be cached).
+            prompt (str): The prompt to use.
+
+        Returns:
+            str: The result of the prompt.
+        """
+        return (describe_image_cached(image, prompt, system_prompt, model, api_key),)
 
 
 class CombineTexts(ComfyUINode):
