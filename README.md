@@ -54,13 +54,54 @@ This fork includes support for the latest Claude models (updated February 2026):
 
 ## Prompt Caching
 
-The **DescribeImage (Cached)** node implements [Anthropic's prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) feature, which caches your system prompt across multiple API calls. This is particularly useful when:
+The **DescribeImage (Cached)** node implements [Anthropic's prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) feature, which caches your system prompt across multiple API calls.
+
+![Describe Image (Cached) node](images/caching-node.png)
+
+### Where to Put Your Text
+
+The node has two text input fields:
+
+**1. First Text Box (System Prompt) - THIS GETS CACHED ✨**
+
+```
+You are an expert at describing images for AI training. Provide detailed, accurate captions.
+```
+
+This is where you put your **consistent captioning instructions** that apply to ALL images in your batch. This is what gets cached, so make it detailed!
+
+Example:
+```
+You are an expert at describing images for AI training. Provide detailed, accurate captions that include:
+- The main subject and their appearance
+- Actions or poses
+- Setting and background details
+- Lighting and atmosphere
+- Art style or medium
+- Camera angle and composition
+
+Focus on objective, descriptive language suitable for training image generation models.
+```
+
+**2. Second Text Box (Prompt) - Per-image instruction**
+
+```
+Describe this image in detail.
+```
+
+This is your per-image prompt. It can stay the same for all images (as shown), or you could vary it slightly if needed. This doesn't get cached, but it's typically much shorter.
+
+### How Caching Works
+
+- **First API call**: System prompt is sent and cached (full cost)
+- **Subsequent calls**: System prompt is retrieved from cache (10% cost)
+- **Result**: You pay full price for the detailed system prompt once, then 90% discount for the next 99+ images!
+
+This is particularly useful when:
 
 - Processing batches of images with consistent captioning instructions
 - Generating training data for LoRA models
 - Running repetitive image analysis tasks
-
-**Cost savings**: After the first image, cached system prompts cost only 10% of regular input tokens, resulting in significant savings for batch operations.
 
 ## Credits
 
