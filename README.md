@@ -7,7 +7,7 @@ This is a fork of [harelc/comfyui-claude](https://github.com/harelc/comfyui-clau
 
 ### Changes in This Fork
 
-- **Updated Claude models**: Added support for Claude 4 models (Opus 4.1, Sonnet 4) and latest Claude 3.5 models
+- **Updated Claude models**: Added support for Claude Opus 4.6, Sonnet 4.5, and Haiku 4.5 (February 2026)
 - **Prompt caching support**: New DescribeImage (Cached) node for cost-effective batch image captioning
 - **Improved error handling**: Better error messages and authentication feedback
 
@@ -40,22 +40,17 @@ this [here](https://docs.anthropic.com/en/api/getting-started).
 
 ## Supported Models
 
-This fork includes support for the latest Claude models:
+This fork includes support for the latest Claude models (updated February 2026):
 
-**Latest versions (recommended)**:
-- `claude-3-5-haiku-latest`
-- `claude-3-5-sonnet-latest`
-- `claude-3-opus-latest`
+**Latest flagship models**:
+- `claude-opus-4-6` - Most capable model for complex tasks
+- `claude-sonnet-4-5-20250929` - Best balance of intelligence and speed
+- `claude-haiku-4-5-20251001` - Fast and cost-effective
 
-**Claude 4 models**:
-- `claude-opus-4-1-20250805`
+**Previous generation (still supported)**:
 - `claude-sonnet-4-20250514`
-
-**Specific dated versions**:
-- `claude-3-5-haiku-20241022`
-- `claude-3-5-sonnet-20241022`
 - `claude-3-opus-20240229`
-- `claude-3-haiku-20240307`
+- `claude-3-5-haiku-20241022`
 
 ## Prompt Caching
 
