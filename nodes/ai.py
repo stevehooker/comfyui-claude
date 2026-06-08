@@ -8,16 +8,15 @@ import anthropic
 from PIL import Image
 import numpy as np
 
-# Updated model list - February 2026
+# Updated model list - June 2026
 models = [
-    # Latest flagship models
-    'claude-opus-4-6',
-    'claude-sonnet-4-5-20250929',
-    'claude-haiku-4-5-20251001',
-    # Previous generation (still supported)
-    'claude-sonnet-4-20250514',
-    'claude-3-opus-20240229',
-    'claude-3-5-haiku-20241022',
+    # Claude 4 generation - current as of June 2026
+    'claude-opus-4-8',           # Latest flagship - May 2026
+    'claude-opus-4-7',           # April 2026
+    'claude-opus-4-6',           # February 2026
+    'claude-sonnet-4-6',         # Best balance of speed/intelligence - Feb 2026
+    'claude-sonnet-4-5-20250929', # Still active until Sept 2026
+    'claude-haiku-4-5-20251001', # Fast and cost-effective
 ]
 
 

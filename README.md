@@ -1,5 +1,5 @@
 # ComfyUI and Claude
-A set of custom nodes that are using Anthropic's Claude models for describing images and transforming texts.
+A set of custom nodes that use Anthropic's Claude models for describing images and transforming texts.
 
 ## Fork Information
 
@@ -7,7 +7,7 @@ This is a fork of [harelc/comfyui-claude](https://github.com/harelc/comfyui-clau
 
 ### Changes in This Fork
 
-- **Updated Claude models**: Added support for Claude Opus 4.6, Sonnet 4.5, and Haiku 4.5 (February 2026)
+- **Updated Claude models**: All current Claude 4 models as of June 2026 (Opus 4.8, 4.7, 4.6, Sonnet 4.6, Sonnet 4.5, Haiku 4.5). Retired models removed.
 - **Prompt caching support**: New DescribeImage (Cached) node for cost-effective batch image captioning
 - **Improved error handling**: Better error messages and authentication feedback
 
@@ -40,17 +40,18 @@ this [here](https://docs.anthropic.com/en/api/getting-started).
 
 ## Supported Models
 
-This fork includes support for the latest Claude models (updated February 2026):
+This fork includes support for all current Claude models (updated June 2026):
 
-**Latest flagship models**:
-- `claude-opus-4-6` - Most capable model for complex tasks
-- `claude-sonnet-4-5-20250929` - Best balance of intelligence and speed
-- `claude-haiku-4-5-20251001` - Fast and cost-effective
+| Model | API string | Notes |
+|-------|-----------|-------|
+| Claude Opus 4.8 | `claude-opus-4-8` | Latest flagship — May 2026 |
+| Claude Opus 4.7 | `claude-opus-4-7` | April 2026 |
+| Claude Opus 4.6 | `claude-opus-4-6` | February 2026 |
+| Claude Sonnet 4.6 | `claude-sonnet-4-6` | Best balance of speed/intelligence |
+| Claude Sonnet 4.5 | `claude-sonnet-4-5-20250929` | Active until at least Sept 2026 |
+| Claude Haiku 4.5 | `claude-haiku-4-5-20251001` | Fast and cost-effective |
 
-**Previous generation (still supported)**:
-- `claude-sonnet-4-20250514`
-- `claude-3-opus-20240229`
-- `claude-3-5-haiku-20241022`
+> **Note**: Several older models have been retired by Anthropic and are no longer available via the API. The `claude-sonnet-4-20250514`, `claude-3-opus-20240229`, and `claude-3-5-haiku-20241022` strings will return errors if used — they have been removed from this fork.
 
 ## Prompt Caching
 
@@ -62,7 +63,7 @@ The **DescribeImage (Cached)** node implements [Anthropic's prompt caching](http
 
 The node has two text input fields:
 
-**1. First Text Box (System Prompt) - THIS GETS CACHED ✨**
+**1. First Text Box (System Prompt) — THIS GETS CACHED ✨**
 
 ```
 You are an expert at describing images for AI training. Provide detailed, accurate captions.
@@ -83,19 +84,19 @@ You are an expert at describing images for AI training. Provide detailed, accura
 Focus on objective, descriptive language suitable for training image generation models.
 ```
 
-**2. Second Text Box (Prompt) - Per-image instruction**
+**2. Second Text Box (Prompt) — Per-image instruction**
 
 ```
 Describe this image in detail.
 ```
 
-This is your per-image prompt. It can stay the same for all images (as shown), or you could vary it slightly if needed. This doesn't get cached, but it's typically much shorter.
+This is your per-image prompt. It can stay the same for all images, or vary it slightly if needed. This doesn't get cached, but it's typically much shorter.
 
 ### How Caching Works
 
 - **First API call**: System prompt is sent and cached (full cost)
 - **Subsequent calls**: System prompt is retrieved from cache (10% cost)
-- **Result**: You pay full price for the detailed system prompt once, then 90% discount for the next 99+ images!
+- **Result**: You pay full price for the detailed system prompt once, then a 90% discount for subsequent images
 
 This is particularly useful when:
 
